@@ -14,16 +14,15 @@ const displaySearchResult = phones => {
     const searchResult = document.getElementById('search-result');
     searchResult.textContent = ''
     phones.forEach(phone => {
-        console.log(phone)
-
+            console.log(phone)
             const div = document.createElement('div');
             div.classList.add('col');
             div.innerHTML = `
-            <div class="card h-100">
-                <img src="..." class="card-img-top" alt="...">
+            <div onclick="loadPhoneDetail(${phone.slug})" class="card h-100">
+                <img src="${phone.image}" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">Card Title</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
+                    <h5 class="card-title">${phone.brand} <span>${phone.phone_name}</span> </h5>
+                    <p class="card-text">Phones Details</p>
                 </div>
             </div>
             `;
