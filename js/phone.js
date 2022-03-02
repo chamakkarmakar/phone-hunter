@@ -1,5 +1,6 @@
 document.getElementById('error-message').style.display = 'none';
 
+// Search Phone
 const searchPhone = () => {
     const searchField = document.getElementById('search-field');
     const searchText = searchField.value;
@@ -9,8 +10,9 @@ const searchPhone = () => {
     searchField.value = '';
     if (searchText == '') {
         document.getElementById('error-message').style.display = 'block';
-        document.getElementById('error-message').innerText = 'Please Write Something to search Phone';
+        document.getElementById('error-message').innerText = 'Please Write Something to search Product';
     }
+
     else {
         // load data 
         const url = ` https://openapi.programming-hero.com/api/phones?search=${searchText}`;
@@ -26,7 +28,7 @@ const displayError = () => {
     document.getElementById('error-message').innerText = 'Something went wrong. Please Try again later';
 }
 
-
+// Display Search Result 
 const displaySearchResult = phones => {
     const searchResult = document.getElementById('search-result');
     searchResult.textContent = '';
@@ -41,10 +43,10 @@ const displaySearchResult = phones => {
             const div = document.createElement('div');
             div.classList.add('col');
             div.innerHTML = `
-            <div class="card h-100 w-75 ">
-                <img src="${phone.image}" class="card-img-top img-fluid mx-auto" alt="...">
+            <div class="card h-100 w-75 shadow-lg bg-body rounded p-2">
+                <img src="${phone.image}" class="card-img-top img-fluid h-75 mx-auto" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">${phone.phone_name} </h5>
+                    <h5 class="card-title">${phone.phone_name}</h5>
                     <span class="card-text">${phone.brand}</span>
                     <p class="card-text"><button onclick="loadPhoneDetail('${phone.slug}')" class="bg-primary text-white p-2 rounded-2 border-0">Phone Details</button></p>
                 </div>
@@ -53,10 +55,8 @@ const displaySearchResult = phones => {
             searchResult.appendChild(div);
         })
     }
-
-
 }
-
+// Load Phone Details 
 const loadPhoneDetail = id => {
     const url = `https://openapi.programming-hero.com/api/phone/${id}`;
     fetch(url)
@@ -64,6 +64,7 @@ const loadPhoneDetail = id => {
         .then(data => displayPhoneDetail(data.data));
 
 }
+// Display Phone Details 
 const displayPhoneDetail = phone => {
     console.log(phone);
     const phoneDetails = document.getElementById('phone-details');
