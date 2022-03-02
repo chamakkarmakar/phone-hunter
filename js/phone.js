@@ -5,6 +5,7 @@ const searchPhone = () => {
     const searchField = document.getElementById('search-field');
     const searchText = searchField.value;
     document.getElementById('error-message').style.display = 'none';
+    
 
     // clear data
     searchField.value = '';
