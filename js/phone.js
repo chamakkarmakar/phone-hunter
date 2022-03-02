@@ -16,7 +16,7 @@ const searchPhone = () => {
         const url = ` https://openapi.programming-hero.com/api/phones?search=${searchText}`;
         fetch(url)
             .then(response => response.json())
-            .then(data => displaySearchResult(data.data.slice(0, 20)))
+            .then(data => displaySearchResult(data.data))
             .catch(error => displayError(error));
     }
 
@@ -30,16 +30,17 @@ const displayError = () => {
 const displaySearchResult = phones => {
     const searchResult = document.getElementById('search-result');
     searchResult.textContent = '';
-    if (phones.length == 0) {
+    if (phones.length === 0) {
         document.getElementById('error-message').style.display = 'block';
         document.getElementById('error-message').innerText = 'No Result Found';
     }
-    phones.forEach(phone => {
-        // console.log(phone)
-
-        const div = document.createElement('div');
-        div.classList.add('col');
-        div.innerHTML = `
+    else {
+        const limitedItem = phones.slice(0, 20);
+        limitedItem.forEach(phone => {
+            // console.log(phone)
+            const div = document.createElement('div');
+            div.classList.add('col');
+            div.innerHTML = `
             <div class="card h-100 w-75 ">
                 <img src="${phone.image}" class="card-img-top img-fluid mx-auto" alt="...">
                 <div class="card-body">
@@ -49,8 +50,9 @@ const displaySearchResult = phones => {
                 </div>
             </div>
             `;
-        searchResult.appendChild(div);
-    })
+            searchResult.appendChild(div);
+        })
+    }
 
 
 }
@@ -74,13 +76,13 @@ const displayPhoneDetail = phone => {
         <div class="col-md-6 w-75">
             <h5>${phone.name}</h5>
             <h5>${phone.brand}</h5>
-            <p>${phone.releaseDate?phone.releaseDate:'No release Date'}</p>
+            <p>${phone.releaseDate ? phone.releaseDate : 'No release Date found'}</p>
 
             <p>
                 <h5>MainFeatures:</h5>
-                    <strong>Storage:</strong> ${phoneFeatures.storage}
-                    <strong>Display Size:</strong> ${phoneFeatures.displaySize}
-                    <strong>ChipSet:</strong> ${phoneFeatures.chipSet}
+                    <strong>Storage:</strong> ${phoneFeatures.storage} <br>
+                    <strong>Display Size:</strong> ${phoneFeatures.displaySize} <br>
+                    <strong>ChipSet:</strong> ${phoneFeatures.chipSet} <br>
                     <strong>Memory:</strong> ${phoneFeatures.memory}
             </p>
 
@@ -97,15 +99,15 @@ const displayPhoneDetail = phone => {
             </p>
 
             <p>
-                <h5>Others</h5>:
-            <strong>Bluetooth:</strong> ${phone.others.Bluetooth?phone.others?.Bluetooth : ''}
-            <strong>GPS:</strong> ${phone.others.GPS?phone.others?.GPS:''}
-            <strong>NFC:</strong> ${phone.others.NFC?phone.others?.NFC:''}
-            <strong>Radio:</strong> ${phone.others.Radio?phone.others?.Radio:''}
-            <strong>USB:</strong> ${phone.others.USB?phone.others?.USB:''}
-            <strong>WLAN:</strong> ${phone.others.WLAN?phone.others?.WLAN:''}
+                <h5>Others:</h5>
+            <strong>Bluetooth:</strong> ${phone.others ? phone.others.Bluetooth : 'No'} <br>
+            <strong>GPS:</strong> ${phone.others ? phone.others.GPS : 'No'} <br>
+            <strong>NFC:</strong> ${phone.others ? phone.others.NFC : 'No'} <br>
+            <strong>Radio:</strong> ${phone.others ? phone.others.Radio : 'No'} <br>
+            <strong>USB:</strong> ${phone.others ? phone.others.USB : 'No'} <br>
+            <strong>WLAN:</strong> ${phone.others ? phone.others.WLAN : 'No'} 
             </p>
         </div>
     `;
-   
+
 }
