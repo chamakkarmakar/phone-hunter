@@ -3,6 +3,8 @@ document.getElementById('error-message').style.display = 'none';
 const searchPhone = () => {
     const searchField = document.getElementById('search-field');
     const searchText = searchField.value;
+    document.getElementById('error-message').style.display = 'none';
+
     // clear data
     searchField.value = '';
     if (searchText == '') {
@@ -64,21 +66,46 @@ const displayPhoneDetail = phone => {
     console.log(phone);
     const phoneDetails = document.getElementById('phone-details');
     phoneDetails.textContent = '';
-    const div = document.createElement('div');
-    div.classList.add('card');
-    div.innerHTML = `
-    <div class="row row-cols-2">
-        <div class="col w-25">
+    const phoneFeatures = phone.mainFeatures;
+    phoneDetails.innerHTML = `
+        <div class="col-md-6 w-25">
             <img src="${phone.image}" alt="">
         </div>
-        <div class="col">
-            <div class="card-body">
-                <h5 class="card-title">${phone.name}</h5>
-                <p class="card-text">${phone.brand}</p>
-                <p class="card-text">${phone.releaseDate}</p>
-            </div>
+        <div class="col-md-6 w-75">
+            <h5>${phone.name}</h5>
+            <h5>${phone.brand}</h5>
+            <p>${phone.releaseDate?phone.releaseDate:'No release Date'}</p>
+
+            <p>
+                <h5>MainFeatures:</h5>
+                    <strong>Storage:</strong> ${phoneFeatures.storage}
+                    <strong>Display Size:</strong> ${phoneFeatures.displaySize}
+                    <strong>ChipSet:</strong> ${phoneFeatures.chipSet}
+                    <strong>Memory:</strong> ${phoneFeatures.memory}
+            </p>
+
+            <p>
+                <h5>Sensors:</h5>
+                    <ul>
+                        <li>${phoneFeatures.sensors[0]}</li>
+                        <li>${phoneFeatures.sensors[1]}</li>
+                        <li>${phoneFeatures.sensors[2]}</li>
+                        <li>${phoneFeatures.sensors[3]}</li>
+                        <li>${phoneFeatures.sensors[4]}</li>
+                        <li>${phoneFeatures.sensors[5]}</li>
+                    </ul>
+            </p>
+
+            <p>
+                <h5>Others</h5>:
+            <strong>Bluetooth:</strong> ${phone.others.Bluetooth?phone.others?.Bluetooth : ''}
+            <strong>GPS:</strong> ${phone.others.GPS?phone.others?.GPS:''}
+            <strong>NFC:</strong> ${phone.others.NFC?phone.others?.NFC:''}
+            <strong>Radio:</strong> ${phone.others.Radio?phone.others?.Radio:''}
+            <strong>USB:</strong> ${phone.others.USB?phone.others?.USB:''}
+            <strong>WLAN:</strong> ${phone.others.WLAN?phone.others?.WLAN:''}
+            </p>
         </div>
-    </div>
     `;
-    phoneDetails.appendChild(div);
+   
 }
