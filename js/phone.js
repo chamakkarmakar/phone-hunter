@@ -67,7 +67,7 @@ const loadPhoneDetail = id => {
 }
 // Display Phone Details 
 const displayPhoneDetail = phone => {
-    console.log(phone);
+    // console.log(phone);
     const phoneDetails = document.getElementById('phone-details');
     phoneDetails.textContent = '';
     const phoneFeatures = phone.mainFeatures;
