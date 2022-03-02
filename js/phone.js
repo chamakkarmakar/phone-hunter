@@ -11,13 +11,13 @@ const searchPhone = () => {
     }
     else {
         // load data 
-        const url = ` https://openapi.programming-herooo.com/api/phones?search=${searchText}`;
+        const url = ` https://openapi.programming-hero.com/api/phones?search=${searchText}`;
         fetch(url)
             .then(response => response.json())
-            .then(data => displaySearchResult(data.data))
+            .then(data => displaySearchResult(data.data.slice(0, 20)))
             .catch(error => displayError(error));
     }
-    
+
 }
 const displayError = () => {
     document.getElementById('error-message').style.display = 'block';
@@ -34,6 +34,7 @@ const displaySearchResult = phones => {
     }
     phones.forEach(phone => {
         // console.log(phone)
+
         const div = document.createElement('div');
         div.classList.add('col');
         div.innerHTML = `
@@ -47,8 +48,9 @@ const displaySearchResult = phones => {
             </div>
             `;
         searchResult.appendChild(div);
-
     })
+
+
 }
 
 const loadPhoneDetail = id => {
@@ -59,17 +61,23 @@ const loadPhoneDetail = id => {
 
 }
 const displayPhoneDetail = phone => {
-    // console.log(phone);
+    console.log(phone);
     const phoneDetails = document.getElementById('phone-details');
-    phoneDetails.textContent='';
+    phoneDetails.textContent = '';
     const div = document.createElement('div');
     div.classList.add('card');
     div.innerHTML = `
-    <img src="${phone.image}" class="card-img-top w-50 h-75" alt="...">
-    <div class="card-body">
-        <h5 class="card-title">${phone.name}</h5>
-        <p class="card-text">${phone.brand}</p>
-        <p class="card-text">${phone.releaseDate}</p>
+    <div class="row row-cols-2">
+        <div class="col w-25">
+            <img src="${phone.image}" alt="">
+        </div>
+        <div class="col">
+            <div class="card-body">
+                <h5 class="card-title">${phone.name}</h5>
+                <p class="card-text">${phone.brand}</p>
+                <p class="card-text">${phone.releaseDate}</p>
+            </div>
+        </div>
     </div>
     `;
     phoneDetails.appendChild(div);
